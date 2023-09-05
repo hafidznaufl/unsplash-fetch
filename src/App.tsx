@@ -1,7 +1,9 @@
 import Layout from "./layout";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import New from "./pages/New";
+import Home from "./pages/Homes";
+import Photos from "./pages/Photos";
+import Collections from "./pages/Collections";
+import Topics from "./pages/Topics";
 
 function App() {
   return (
@@ -9,7 +11,9 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/new" element={<New />} />
+          <Route path="/photos" element={<Photos />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/topics" element={<Topics />} />
         </Routes>
       </Layout>
     </main>

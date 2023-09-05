@@ -7,9 +7,9 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="layout px">
+    <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="container mx-auto px-2">{children}</main>
     </div>
   );
 };
