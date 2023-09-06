@@ -9,7 +9,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <main className="container mx-auto px-2">{children}</main>
+      <main className="layout">{children}</main>
     </div>
   );
 };

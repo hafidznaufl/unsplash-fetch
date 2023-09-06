@@ -7,7 +7,7 @@ import Topics from "./pages/Topics";
 
 function App() {
   return (
-    <main>
+    <main className="app">
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div className="h-screen">halo</div>
+    <div>Home</div>
   )
 }
 export default Home
