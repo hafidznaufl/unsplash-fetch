@@ -7,12 +7,15 @@ import {
   BiBook,
   BiSolidMoon,
   BiSolidSun,
+  BiMenuAltRight,
+  BiChevronLeft,
 } from "react-icons/bi";
 import { Data } from "../../utils/constant/navbar";
 
 const Navbar = () => {
   const [activePage, setActivePage] = useState("");
   const [darkMode, setDarkMode] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -37,36 +40,91 @@ const Navbar = () => {
     }
   }, []);
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <main>
-      <nav className="bg-pureWhite shadow-sm fixed inset-x-0 top-0 z-50">
+      <nav className="fixed inset-x-0 top-0 z-50 bg-pureWhite shadow-sm">
         {/* Desktop Navbar */}
-        <div className="container mx-auto px-2 hidden sm:flex flex-row justify-between items-center py-4">
-          <h1 className="select-none text-black font-extrabold">
+        <div className="container mx-auto flex flex-row items-center justify-between px-2 py-4 lg:py-4">
+          <h1 className="select-none font-extrabold text-black">
             Unsplash Fetch
           </h1>
-          <div className="hidden sm:flex">
+
+          <div className="hidden lg:flex">
             <ul className="flex gap-8">
               {Data.map((item) => (
-                <li key={item.name} className="hovermenu">
-                  <Link to={item.direct}>{item.name}</Link>
+                <li
+                  key={item.name}
+                  className={`hovermenu ${
+                    activePage === item.name ? "text-black" : "opacity-60"
+                  }`}
+                >
+                  <Link
+                    to={item.direct}
+                    onClick={() => setActivePage(item.name)}
+                  >
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
+
           {/* Dark Mode Toggle */}
-          <div className="flex gap-2 items-center">
+          <div className="hidden items-center gap-2 lg:flex">
             <button className="outline_btn" onClick={toggleDarkMode}>
               {darkMode ? <BiSolidSun size={20} /> : <BiSolidMoon size={20} />}
             </button>
+
             {/* Login & Register buttons */}
             <button className="black_btn">Login</button>
             <button className="outline_btn">Register</button>
           </div>
+
+          {/* Mobile Toggle Button */}
+          <div className="flex items-center justify-center lg:hidden">
+            <button onClick={toggleMobileMenu}>
+              <BiMenuAltRight size={20} />
+            </button>
+          </div>
         </div>
 
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-x-0 left-0 right-0 top-0 z-40 bg-pureWhite shadow-sm dark:bg-white dark:text-black lg:hidden">
+            <div className="container mx-auto px-2 py-4">
+              <div className="mb-6 flex items-center justify-between">
+                <h1 className="select-none font-extrabold text-black">
+                  Unsplash Fetch
+                </h1>
+                <button onClick={toggleMobileMenu}>
+                  <BiChevronLeft size={20} />
+                </button>
+              </div>
+              {/* Login & Register buttons */}
+              <div className="flex flex-col gap-2">
+                <button className="black_btn">Login</button>
+                <button className="outline_btn">Register</button>
+              </div>
+              {/* Dark Mode Toggle */}
+              <div className="mt-2 flex justify-center">
+                <button className="outline_btn w-full" onClick={toggleDarkMode}>
+                  {darkMode ? (
+                    <BiSolidSun size={20} />
+                  ) : (
+                    <BiSolidMoon size={20} />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Mobile Navbar */}
-        <div className="py-4 fixed inset-x-0 bottom-0 z-50 border-y-2 bg-pureWhite sm:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-50 m-2 rounded-3xl bg-pureWhite py-4 shadow-md lg:hidden">
           <div>
             <ul className="flex justify-around">
               {Data.map((item) => (
@@ -113,7 +171,6 @@ const Navbar = () => {
               ))}
             </ul>
           </div>
-          <div></div>
         </div>
       </nav>
     </main>
