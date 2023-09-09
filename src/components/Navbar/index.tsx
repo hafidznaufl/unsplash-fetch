@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   BiHomeAlt2,
   BiCollection,
@@ -7,15 +7,23 @@ import {
   BiBook,
   BiSolidMoon,
   BiSolidSun,
-  BiMenuAltRight,
-  BiChevronLeft,
+  BiSearch,
 } from "react-icons/bi";
+import { FiX, FiMenu } from "react-icons/fi";
 import { Data } from "../../utils/constant/navbar";
 
 const Navbar = () => {
   const [activePage, setActivePage] = useState("");
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    setActivePage(path);
+    navigate(path);
+  }, [navigate]);
 
   useEffect(() => {
     if (darkMode) {
@@ -27,10 +35,6 @@ const Navbar = () => {
     localStorage.setItem("darkMode", darkMode.toString());
   }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   useEffect(() => {
     const storedDarkMode = localStorage.getItem("darkMode");
     if (storedDarkMode === "true") {
@@ -40,6 +44,10 @@ const Navbar = () => {
     }
   }, []);
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -48,7 +56,7 @@ const Navbar = () => {
     <main>
       <nav className="fixed inset-x-0 top-0 z-50 bg-pureWhite shadow-sm">
         {/* Desktop Navbar */}
-        <div className="container mx-auto flex flex-row items-center justify-between px-2 py-4 lg:py-4">
+        <div className="container mx-auto flex flex-row items-center justify-between px-4 py-4 lg:py-4">
           <h1 className="select-none font-extrabold text-black">
             Unsplash Fetch
           </h1>
@@ -58,16 +66,11 @@ const Navbar = () => {
               {Data.map((item) => (
                 <li
                   key={item.name}
-                  className={`hovermenu ${
-                    activePage === item.name ? "text-black" : "opacity-60"
+                  className={`font-semibold text-black ${
+                    activePage === item.direct ? "text-black" : "opacity-60"
                   }`}
                 >
-                  <Link
-                    to={item.direct}
-                    onClick={() => setActivePage(item.name)}
-                  >
-                    {item.name}
-                  </Link>
+                  <Link to={item.direct}>{item.name}</Link>
                 </li>
               ))}
             </ul>
@@ -87,7 +90,7 @@ const Navbar = () => {
           {/* Mobile Toggle Button */}
           <div className="flex items-center justify-center lg:hidden">
             <button onClick={toggleMobileMenu}>
-              <BiMenuAltRight size={20} />
+              <FiMenu size={20} />
             </button>
           </div>
         </div>
@@ -95,13 +98,13 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="fixed inset-x-0 left-0 right-0 top-0 z-40 bg-pureWhite shadow-sm dark:bg-white dark:text-black lg:hidden">
-            <div className="container mx-auto px-2 py-4">
+            <div className="container mx-auto px-4 py-4">
               <div className="mb-6 flex items-center justify-between">
                 <h1 className="select-none font-extrabold text-black">
                   Unsplash Fetch
                 </h1>
                 <button onClick={toggleMobileMenu}>
-                  <BiChevronLeft size={20} />
+                  <FiX size={20} />
                 </button>
               </div>
               {/* Login & Register buttons */}
@@ -124,45 +127,50 @@ const Navbar = () => {
         )}
 
         {/* Mobile Navbar */}
-        <div className="fixed inset-x-0 bottom-0 z-50 m-2 rounded-3xl bg-pureWhite py-4 shadow-md lg:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-50 m-4 rounded-3xl bg-pureWhite py-4 shadow-md lg:hidden">
           <div>
             <ul className="flex justify-around">
               {Data.map((item) => (
                 <li key={item.name}>
-                  <Link
-                    to={item.direct}
-                    onClick={() => setActivePage(item.name)}
-                  >
-                    {item.name === "Home" && (
+                  <Link to={item.direct}>
+                    {item.direct === "/" && (
                       <BiHomeAlt2
                         size={20}
                         style={{
-                          color: activePage === "Home" ? "black" : "grey",
+                          color: activePage === "/" ? "black" : "grey",
                         }}
                       />
                     )}
-                    {item.name === "Photos" && (
+                    {item.direct === "/search" && (
+                      <BiSearch
+                        size={20}
+                        style={{
+                          color: activePage === "/search" ? "black" : "grey",
+                        }}
+                      />
+                    )}
+                    {item.direct === "/photos" && (
                       <BiImages
                         size={20}
                         style={{
-                          color: activePage === "Photos" ? "black" : "grey",
+                          color: activePage === "/photos" ? "black" : "grey",
                         }}
                       />
                     )}
-                    {item.name === "Collections" && (
+                    {item.direct === "/collections" && (
                       <BiCollection
                         size={20}
                         style={{
                           color:
-                            activePage === "Collections" ? "black" : "grey",
+                            activePage === "/collections" ? "black" : "grey",
                         }}
                       />
                     )}
-                    {item.name === "Topics" && (
+                    {item.direct === "/topics" && (
                       <BiBook
                         size={20}
                         style={{
-                          color: activePage === "Topics" ? "black" : "grey",
+                          color: activePage === "/topics" ? "black" : "grey",
                         }}
                       />
                     )}

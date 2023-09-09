@@ -12,16 +12,16 @@
   }
 
   body::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   body::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.02);
+    background: transparent;
   }
 
   body::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
   body::-webkit-scrollbar-thumb:hover {
@@ -47,8 +47,4 @@
 
 .outline_btn {
   @apply flex items-center justify-center rounded-full border border-black bg-transparent px-5 py-1.5 text-center font-inter text-sm text-black transition-all hover:bg-black hover:text-white;
-}
-
-.hovermenu {
-  @apply font-semibold text-black opacity-60 hover:opacity-100 focus:text-black;
 }
